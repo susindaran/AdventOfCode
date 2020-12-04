@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+require_relative '../../template'
+
 SUM_TOTAL = 2020
 def find_sum_pair(nums)
   map = {}
@@ -10,8 +14,8 @@ def find_sum_pair(nums)
   0
 end
 
-# read input
-filename = File.basename(__FILE__).split('.')[0]
-file = File.open("#{filename}.input")
-file_data = file.readlines.map { |line| line.chomp.to_i }
-puts find_sum_pair(file_data)
+input_file_name = File.basename(__FILE__).split('.')[0]
+AOC.problem input_file_name do |input|
+  input = input.map { |line| line.chomp.to_i }
+  find_sum_pair(input)
+end
