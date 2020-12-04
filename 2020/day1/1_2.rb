@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../template'
+require_relative '../../aoc'
 
 SUM_TOTAL = 2020
 def find_sum_triplet(nums)

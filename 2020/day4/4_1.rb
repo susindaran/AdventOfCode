@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../template'
+require_relative '../../aoc'
 
 def valid_passports(input)
   input = input.join('')

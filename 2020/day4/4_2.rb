@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../template'
+require_relative '../../aoc'
 
 def valid_passport?(passport)
   unless passport['byr'].match?(/^[0-9]{4}$/) && passport['byr'].to_i >= 1920 && passport['byr'].to_i <= 2002
