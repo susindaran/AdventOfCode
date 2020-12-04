@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative '../../template'
+
 def valid_passports(input)
   input = input.join('')
   passports = input.gsub("\n", '##').gsub('####', "\n").gsub('##', ' ').split("\n")
@@ -11,7 +13,7 @@ def valid_passports(input)
   end.length
 end
 
-filename = File.basename(__FILE__).split('.')[0]
-file = File.open("#{filename}.input")
-input = file.readlines
-puts valid_passports(input)
+input_file_name = File.basename(__FILE__).split('.')[0]
+AOC.problem input_file_name do |input|
+  valid_passports(input)
+end

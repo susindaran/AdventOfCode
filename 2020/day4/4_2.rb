@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative '../../template'
+
 def valid_passport?(passport)
   unless passport['byr'].match?(/^[0-9]{4}$/) && passport['byr'].to_i >= 1920 && passport['byr'].to_i <= 2002
     # puts passport['byr']
@@ -68,7 +70,7 @@ def valid_passports(input)
   end.length
 end
 
-filename = File.basename(__FILE__).split('.')[0]
-file = File.open("#{filename}.input")
-input = file.readlines
-puts valid_passports(input)
+input_file_name = File.basename(__FILE__).split('.')[0]
+AOC.problem input_file_name do |input|
+  valid_passports(input)
+end
