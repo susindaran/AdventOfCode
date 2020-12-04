@@ -54,14 +54,16 @@ end
 
 def valid_passports(input)
   input = input.join('')
+
+  # Replace newlines with '##', which leads to empty lines replaced with '####'
+  # Replace empty lines ('####') with a single newline
+  # Replace remaining '##' with space
+  # This will give us one passport per line. So, finally split by newline
   passports = input.gsub("\n", '##').gsub('####', "\n").gsub('##', ' ').split("\n")
 
   required_fields = %w[byr iyr eyr hgt hcl ecl pid].sort
   passports.filter do |passport|
-    field_map = passport.split(' ').each_with_object({}) do |entry, map|
-      parts = entry.split(':')
-      map[parts[0]] = parts[1]
-    end
+    field_map = passport.split(' ').map { |field| field.split(':') }.to_h
     (required_fields - field_map.keys.sort).length.zero? && valid_passport?(field_map)
   end.length
 end
