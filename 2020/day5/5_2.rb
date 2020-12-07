@@ -2,20 +2,9 @@
 
 require_relative '../../aoc'
 
-def get_row(seating)
-  seating[0..6].reverse.chars.each_with_index.inject(0) do |row, (dir, index)|
-    row | ((dir == 'F' ? 0 : 1) << index)
-  end
-end
-
-def get_column(seating)
-  seating[7..9].reverse.chars.each_with_index.inject(0) do |col, (dir, index)|
-    col | ((dir == 'R' ? 1 : 0) << index)
-  end
-end
-
 def parse_seating(seating)
-  get_row(seating) * 8 + get_column(seating)
+  seating = seating.gsub('F', '0').gsub('B', '1').gsub('R', '1').gsub('L', '0')
+  seating[0..6].to_i(2) * 8 + seating[7..9].to_i(2)
 end
 
 def missing_seat_id(seatings)
