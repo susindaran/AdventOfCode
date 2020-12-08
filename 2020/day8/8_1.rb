@@ -6,25 +6,15 @@ class Instruction
   attr_reader :operation, :operand, :executed
 
   def initialize(line, line_number)
-    parts = line.split(' ')
+    operation, operand = line.split(' ')
     @line_number = line_number
-    @operation = parts[0]
-    @operand = parts[1].to_i
-    @executed = false
+    @operation = operation
+    @operand = operand.to_i
   end
 
   def execute(accumulator)
     @executed = true
-    new_acc = case @operation
-              when 'nop'
-                accumulator
-              when 'acc'
-                accumulator + @operand
-              when 'jmp'
-                accumulator
-              else
-                accumulator
-              end
+    new_acc = @operation == 'acc' ? accumulator + @operand : accumulator
     [new_acc, next_line]
   end
 
@@ -43,11 +33,7 @@ class Instruction
 end
 
 def find_acc_value(program)
-  index = -1
-  instructions = program.map do |line|
-    index += 1
-    Instruction.new(line, index)
-  end
+  instructions = program.map.with_index { |line, index| Instruction.new(line, index) }
 
   ins_index = 0
   accumulator = 0
