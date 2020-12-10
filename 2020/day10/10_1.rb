@@ -3,16 +3,14 @@
 require_relative '../../aoc'
 
 def find_differences(input)
-  input.sort!
-  input.unshift(0)
-  input.push(input.last + 3)
+  ratings = [0, input.sort!, input.last + 3].flatten
 
   ones = 0
   threes = 0
   index = 1
-  until index >= input.length
-    ones += 1 if input[index] - input[index - 1] == 1
-    threes += 1 if input[index] - input[index - 1] == 3
+  until index >= ratings.length
+    ones += 1 if ratings[index] - ratings[index - 1] == 1
+    threes += 1 if ratings[index] - ratings[index - 1] == 3
     index += 1
   end
 
