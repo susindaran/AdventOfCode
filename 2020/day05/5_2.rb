@@ -3,7 +3,7 @@
 require_relative '../../aoc'
 
 def parse_seating(seating)
-  seating = seating.gsub('F', '0').gsub('B', '1').gsub('R', '1').gsub('L', '0')
+  seating.gsub!(/[FBRL]/, 'F' => '0', 'B' => '1', 'L' => 0, 'R' => '1')
   seating[0..6].to_i(2) * 8 + seating[7..9].to_i(2)
 end
 
