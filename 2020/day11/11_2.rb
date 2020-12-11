@@ -2,77 +2,31 @@
 
 require_relative '../../aoc'
 
-def row_within_bounds(layout, row)
-  row >= 0 && row < layout.length
+def within_bounds(layout, row, col)
+  row >= 0 && row < layout.length && col >= 0 && col < layout[0].length
 end
 
-def col_within_bounds(layout, col)
-  col >= 0 && col < layout[0].length
+def get_adjacent_seating(layout, row, col, row_offset, col_offset, range)
+  new_row, new_col = row + row_offset, col + col_offset
+  range.times do
+    break unless within_bounds(layout, new_row, new_col)
+    return layout[new_row][new_col] if layout[new_row][new_col] != '.'
+
+    new_row += row_offset
+    new_col += col_offset
+  end
+  '.'
 end
 
 def count_adjacent_occupied(layout, row, col)
   occupied = 0
+  (-1..1).each do |row_offset|
+    (-1..1).each do |col_offset|
+      next if row_offset.zero? && col_offset.zero?
 
-  # Check left
-  (col - 1).downto(0).each_with_object(row) do |new_col, new_row|
-    occupied += 1 if layout[new_row][new_col] == '#'
-    break if layout[new_row][new_col] != '.'
+      occupied += get_adjacent_seating(layout, row, col, row_offset, col_offset, layout.length) == '#' ? 1 : 0
+    end
   end
-
-  # Check right
-  (col + 1...layout[0].length).each_with_object(row) do |new_col, new_row|
-    occupied += 1 if layout[new_row][new_col] == '#'
-    break if layout[new_row][new_col] != '.'
-  end
-
-  # Check Top
-  (row - 1).downto(0).each_with_object(col) do |new_row, new_col|
-    occupied += 1 if layout[new_row][new_col] == '#'
-    break if layout[new_row][new_col] != '.'
-  end
-
-  # Check Down
-  (row + 1...layout.length).each_with_object(col) do |new_row, new_col|
-    occupied += 1 if layout[new_row][new_col] == '#'
-    break if layout[new_row][new_col] != '.'
-  end
-
-  # Check NW
-  (1...layout.length).each do |offset|
-    new_row, new_col = row - offset, col - offset
-    break unless row_within_bounds(layout, new_row) && col_within_bounds(layout, new_col)
-
-    occupied += 1 if layout[new_row][new_col] == '#'
-    break if layout[new_row][new_col] != '.'
-  end
-
-  # Check NE
-  (1...layout.length).each do |offset|
-    new_row, new_col = row - offset, col + offset
-    break unless row_within_bounds(layout, new_row) && col_within_bounds(layout, new_col)
-
-    occupied += 1 if layout[new_row][new_col] == '#'
-    break if layout[new_row][new_col] != '.'
-  end
-
-  # Check SW
-  (1...layout.length).each do |offset|
-    new_row, new_col = row + offset, col - offset
-    break unless row_within_bounds(layout, new_row) && col_within_bounds(layout, new_col)
-
-    occupied += 1 if layout[new_row][new_col] == '#'
-    break if layout[new_row][new_col] != '.'
-  end
-
-  # Check SE
-  (1...layout.length).each do |offset|
-    new_row, new_col = row + offset, col + offset
-    break unless row_within_bounds(layout, new_row) && col_within_bounds(layout, new_col)
-
-    occupied += 1 if layout[new_row][new_col] == '#'
-    break if layout[new_row][new_col] != '.'
-  end
-
   occupied
 end
 

@@ -2,29 +2,31 @@
 
 require_relative '../../aoc'
 
-def row_within_bounds(layout, row)
-  row >= 0 && row < layout.length
+def within_bounds(layout, row, col)
+  row >= 0 && row < layout.length && col >= 0 && col < layout[0].length
 end
 
-def col_within_bounds(layout, col)
-  col >= 0 && col < layout[0].length
+def get_adjacent_seating(layout, row, col, row_offset, col_offset, range)
+  new_row, new_col = row + row_offset, col + col_offset
+  range.times do
+    break unless within_bounds(layout, new_row, new_col)
+    return layout[new_row][new_col] if layout[new_row][new_col] != '.'
+
+    new_row += row_offset
+    new_col += col_offset
+  end
+  '.'
 end
 
 def count_adjacent_occupied(layout, row, col)
   occupied = 0
   (-1..1).each do |row_offset|
-    new_row = row + row_offset
-    next unless row_within_bounds(layout, new_row)
-
     (-1..1).each do |col_offset|
-      new_col = col + col_offset
-      next unless col_within_bounds(layout, new_col)
       next if row_offset.zero? && col_offset.zero?
 
-      occupied += 1 if layout[new_row][new_col] == '#'
+      occupied += get_adjacent_seating(layout, row, col, row_offset, col_offset, 1) == '#' ? 1 : 0
     end
   end
-
   occupied
 end
 
