@@ -8,10 +8,10 @@ def parse_seating(seating)
 end
 
 def missing_seat_id(seatings)
-  seat_ids = seatings.map { |seating| parse_seating(seating) }.sort
-  low = seat_ids[0]
-  high = seat_ids[seat_ids.length - 1]
-  ((high - low + 1) * (low + high) / 2) - seat_ids.reduce(&:+)
+  seat_ids = seatings.map { |seating| parse_seating(seating) }
+  low = seat_ids.min
+  high = seat_ids.max
+  ((high - low + 1) * (low + high) / 2) - seat_ids.sum
 end
 
 input_file_name = File.basename(__FILE__).split('.')[0]
