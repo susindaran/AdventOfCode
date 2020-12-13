@@ -16,7 +16,7 @@ end
 
 input_file_name = File.basename(__FILE__).split('.')[0]
 AOC.problem input_file_name do |input|
-  input = input.map(&:chomp).first.split(',')
+  input = input.map(&:chomp)[1].split(',')
 
   ids = input.each_with_index.filter_map do |id, idx|
     next if id == 'x'
