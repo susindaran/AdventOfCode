@@ -20,8 +20,7 @@ def find_sum_triplet(nums)
   0
 end
 
-input_file_name = File.basename(__FILE__).split('.')[0]
-AOC.problem input_file_name do |input|
+AOC.problem do |input|
   input = input.map { |line| line.chomp.to_i }
   find_sum_triplet(input)
 end

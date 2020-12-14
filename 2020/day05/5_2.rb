@@ -14,8 +14,7 @@ def missing_seat_id(seatings)
   ((high - low + 1) * (low + high) / 2) - seat_ids.sum
 end
 
-input_file_name = File.basename(__FILE__).split('.')[0]
-AOC.problem input_file_name do |input|
+AOC.problem do |input|
   input.map!(&:chomp)
   missing_seat_id(input)
 end

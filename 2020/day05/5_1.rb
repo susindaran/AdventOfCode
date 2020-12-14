@@ -11,8 +11,7 @@ def highest_seat(seatings)
   seatings.map { |seating| parse_seating(seating) }.max
 end
 
-input_file_name = File.basename(__FILE__).split('.')[0]
-AOC.problem input_file_name do |input|
+AOC.problem do |input|
   input.map!(&:chomp)
   highest_seat(input)
 end

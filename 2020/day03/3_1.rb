@@ -16,8 +16,7 @@ def trees_encountered(input)
   trees
 end
 
-input_file_name = File.basename(__FILE__).split('.')[0]
-AOC.problem input_file_name do |input|
+AOC.problem do |input|
   input = input.map(&:chomp)
   trees_encountered(input)
 end

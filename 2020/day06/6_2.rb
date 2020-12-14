@@ -14,8 +14,7 @@ def get_count(groups)
   end.reduce(&:+)
 end
 
-input_file_name = File.basename(__FILE__).split('.')[0]
-AOC.problem input_file_name do |input|
+AOC.problem do |input|
   input = input.join('').split("\n\n").map { |group| group.split("\n") }
   get_count(input)
 end

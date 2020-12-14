@@ -2,6 +2,13 @@
 
 require_relative '../../aoc'
 
+# Example
+# 5, x, 6
+#
+# Step starts with 1
+#
+# The first id departs in 0, 5, 10, 15, 20, 25, 30...
+# The second id (6) has an offset of 2 here.
 def find_earliest(ids)
   time = ids.first[0]
   step = 1
@@ -14,8 +21,7 @@ def find_earliest(ids)
   time
 end
 
-input_file_name = File.basename(__FILE__).split('.')[0]
-AOC.problem input_file_name do |input|
+AOC.problem do |input|
   input = input.map(&:chomp)[1].split(',')
 
   ids = input.each_with_index.filter_map do |id, idx|

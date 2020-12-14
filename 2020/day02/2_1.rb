@@ -15,8 +15,7 @@ def is_valid_password(input)
   end.size
 end
 
-input_file_name = File.basename(__FILE__).split('.')[0]
-AOC.problem input_file_name do |input|
+AOC.problem do |input|
   input = input.map(&:chomp)
   is_valid_password(input)
 end

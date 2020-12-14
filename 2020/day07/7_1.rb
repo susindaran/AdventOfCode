@@ -73,7 +73,6 @@ def color_possibilities(rules)
   count
 end
 
-input_file_name = File.basename(__FILE__).split('.')[0]
-AOC.problem input_file_name do |input|
+AOC.problem do |input|
   color_possibilities(input.map(&:chomp))
 end

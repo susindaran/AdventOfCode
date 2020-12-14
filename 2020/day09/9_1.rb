@@ -19,8 +19,7 @@ def find_weakness(input, preamble_count)
   input[index]
 end
 
-input_file_name = File.basename(__FILE__).split('.')[0]
-AOC.problem input_file_name do |input|
+AOC.problem do |input|
   input.map! { |line| line.chomp.to_i }
   preamble_count = 25
   find_weakness(input, preamble_count)

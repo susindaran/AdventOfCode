@@ -16,8 +16,7 @@ def find_combinations(input)
   counts.last
 end
 
-input_file_name = File.basename(__FILE__).split('.')[0]
-AOC.problem input_file_name do |input|
+AOC.problem do |input|
   input.map! { |line| line.chomp.to_i }
   find_combinations(input)
 end

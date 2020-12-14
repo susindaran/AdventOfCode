@@ -71,7 +71,6 @@ def color_possibilities(rules)
   get_total_child_bags(get_bag_by_color(bags, 'shiny gold')) - 1
 end
 
-input_file_name = File.basename(__FILE__).split('.')[0]
-AOC.problem input_file_name do |input|
+AOC.problem do |input|
   color_possibilities(input.map(&:chomp))
 end

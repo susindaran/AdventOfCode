@@ -57,8 +57,7 @@ def find_occupied(layout)
   layout.flatten.select { |ele| ele == '#' }.length
 end
 
-input_file_name = File.basename(__FILE__).split('.')[0]
-AOC.problem input_file_name do |input|
+AOC.problem do |input|
   input.map! { |line| line.chomp.chars }
   find_occupied(input)
 end

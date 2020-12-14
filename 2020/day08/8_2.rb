@@ -77,8 +77,7 @@ def find_acc_value(program)
   accumulator
 end
 
-input_file_name = File.basename(__FILE__).split('.')[0]
-AOC.problem input_file_name do |input|
+AOC.problem do |input|
   input.map!(&:chomp)
   find_acc_value(input)
 end

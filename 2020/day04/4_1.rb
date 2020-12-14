@@ -13,7 +13,6 @@ def valid_passports(input)
   end.length
 end
 
-input_file_name = File.basename(__FILE__).split('.')[0]
-AOC.problem input_file_name do |input|
+AOC.problem do |input|
   valid_passports(input)
 end
