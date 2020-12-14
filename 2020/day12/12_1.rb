@@ -11,7 +11,7 @@ class Instruction
   end
 end
 
-class Location
+class Ship
   def initialize
     @x = 0
     @y = 0
@@ -48,7 +48,7 @@ class Location
 end
 
 def find_distance(input)
-  location = Location.new
+  location = Ship.new
   input
     .map { |line| Instruction.new(line) }
     .each { |instruction| location.move(instruction) }

@@ -11,8 +11,7 @@ class Instruction
   end
 end
 
-class Location
-  # N, E, W, S
+class Ship
   DIRECTION_MULTIPLIERS = {
     'N' => [0, 1],
     'E' => [1, 0],
@@ -48,7 +47,7 @@ class Location
 end
 
 def find_distance(input)
-  location = Location.new
+  location = Ship.new
   input
     .map { |line| Instruction.new(line) }
     .each { |instruction| location.move(instruction) }
