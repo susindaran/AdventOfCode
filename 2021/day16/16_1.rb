@@ -4,6 +4,7 @@ require_relative '../../aoc'
 
 class Packet
   attr_reader :idx, :version_sum, :expr, :val
+
   def initialize(bin, idx)
     @bin = bin
     @idx = idx
@@ -13,22 +14,22 @@ class Packet
   end
 
   def parse
-    ver = read_version
+    read_version
     type = read_type
 
     if type == 4
-      literal =  read_literal
+      literal = read_literal
       @val = literal
-      @expr += "#{literal}"
+      @expr += literal.to_s
     else
       len_type = read_len_type
 
       if len_type == '0'
         total_len = read_num(15)
-        condition = lambda { |bits_read, _| bits_read < total_len }
+        condition = ->(bits_read, _) { bits_read < total_len }
       elsif len_type == '1'
         num_packets = read_num(11)
-        condition = lambda { |_, packets_read| packets_read < num_packets }
+        condition = ->(_, packets_read) { packets_read < num_packets }
       else
         raise "Unexpected packet length type '#{len_type}'"
       end
@@ -59,15 +60,24 @@ class Packet
         @val = sub_packets.map(&:val).max
         @expr += "(max[#{sub_packets.map(&:expr).join(', ')}])"
       when 5
-        raise "Too many operands for operation type '#{type}' (expected 2, but got #{sub_packets.size})" if sub_packets.size > 2
+        if sub_packets.size > 2
+          raise "Too many operands for operation type '#{type}' (expected 2, but got #{sub_packets.size})"
+        end
+
         @val = sub_packets[0].val > sub_packets[1].val ? 1 : 0
         @expr += "(#{sub_packets.map(&:expr).join(' > ')})"
       when 6
-        raise "Too many operands for operation type '#{type}' (expected 2, but got #{sub_packets.size})" if sub_packets.size > 2
+        if sub_packets.size > 2
+          raise "Too many operands for operation type '#{type}' (expected 2, but got #{sub_packets.size})"
+        end
+
         @val = sub_packets[0].val < sub_packets[1].val ? 1 : 0
         @expr += "(#{sub_packets.map(&:expr).join(' < ')})"
       when 7
-        raise "Too many operands for operation type '#{type}' (expected 2, but got #{sub_packets.size})" if sub_packets.size > 2
+        if sub_packets.size > 2
+          raise "Too many operands for operation type '#{type}' (expected 2, but got #{sub_packets.size})"
+        end
+
         @val = sub_packets[0].val == sub_packets[1].val ? 1 : 0
         @expr += "(#{sub_packets.map(&:expr).join(' == ')})"
       else
@@ -79,14 +89,15 @@ class Packet
   end
 
   private
+
   def read_version
-    @version_sum += @bin[@idx...@idx+3].to_i(2)
+    @version_sum += @bin[@idx...@idx + 3].to_i(2)
     @idx += 3
     @version_sum
   end
 
   def read_type
-    type = @bin[@idx...@idx+3].to_i(2)
+    type = @bin[@idx...@idx + 3].to_i(2)
     @idx += 3
     type
   end
@@ -102,7 +113,7 @@ class Packet
     num = ''
 
     while read_next
-      part = @bin[@idx...@idx+5]
+      part = @bin[@idx...@idx + 5]
       @idx += 5
 
       read_next = part[0] == '1'
@@ -113,14 +124,14 @@ class Packet
   end
 
   def read_num(bits)
-    num = @bin[@idx...@idx+bits].to_i(2)
+    num = @bin[@idx...@idx + bits].to_i(2)
     @idx += bits
     num
   end
 end
 
 AOC.problem(read_lines: false) do |input|
-  bin = input.chars.map { |x| x.hex.to_s(2).rjust(4, '0') }.join('')
+  bin = input.chars.map { |x| x.hex.to_s(2).rjust(4, '0') }.join
 
   p = Packet.new(bin, 0)
   p.parse
