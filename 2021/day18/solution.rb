@@ -169,10 +169,21 @@ def add(left, right)
   Node.new(nil, left, right)
 end
 
-AOC.problem do |input|
+AOC.part1 do |input|
+  nodes = input.map { |i| parse(i) }
+
+  nodes[1..].reduce(nodes[0]) { |sum, node| reduce(add(sum, node)) }.magnitude
+end
+
+AOC.part2(read_lines: true) do |input|
   nodes = input.map { |i| parse(i) }
 
   (input.combination(2).to_a + input.reverse.combination(2).to_a).map do |a, b|
     reduce(add(parse(a), parse(b))).magnitude
   end.max
+end
+
+AOC.validate_solution do |part1_sol, part2_sol|
+  raise unless part1_sol == 4088
+  raise unless part2_sol == 4536
 end

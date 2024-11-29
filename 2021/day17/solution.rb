@@ -43,6 +43,6 @@ AOC.part2(read_lines: false) do |input|
 end
 
 AOC.validate_solution do |part1_sol, part2_sol|
-  raise if part1_sol != 5886
-  raise if part2_sol != 1806
+  raise unless part1_sol == 5886
+  raise unless part2_sol == 1806
 end
