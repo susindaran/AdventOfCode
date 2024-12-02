@@ -3,15 +3,15 @@
 require_relative '../../aoc'
 
 AOC.part1(read_lines: false) do |input|
-  arrs = input.split("\n").map { |line| line.split('   ').map(&:to_i) }.transpose.map(&:sort!)
-  arrs[0].zip(arrs[1]).map { |pair| (pair[0] - pair[1]).abs }.sum
+  left, right = input.split("\n").map { |line| line.split('   ').map(&:to_i) }.transpose.map(&:sort!)
+  left.zip(right).sum { |pair| (pair[0] - pair[1]).abs }
 end
 
 AOC.part2(read_lines: false) do |input|
-  arrs = input.split("\n").map { |line| line.split('   ').map(&:to_i) }.transpose
+  left, right = input.split("\n").map { |line| line.split('   ').map(&:to_i) }.transpose
 
-  lookup = arrs[1].tally
-  arrs[0].map { |num| num * (lookup[num] || 0) }.sum
+  lookup = right.tally
+  left.sum { |num| num * (lookup[num] || 0) }
 end
 
 AOC.validate_solution do |part1_sol, part2_sol|
