@@ -2,16 +2,18 @@
 
 require_relative '../../aoc'
 
+REGEX = /(?=(XMAS|SAMX))/
+
 AOC.part1(read_lines: false) do |input|
   input = input.split("\n")
   grid = input.map(&:chars)
 
   # Horizontals
   # Uses positive lookahead `?=` to capture overlapping matches like 'XMASAMX'
-  h = input.sum { |line| line.scan(/(?=(XMAS|SAMX))/).flatten.size }
+  h = input.sum { |line| line.scan(REGEX).flatten.size }
 
   # Verticals
-  v = grid.transpose.sum { |line| line.join.scan(/(?=(XMAS|SAMX))/).flatten.size }
+  v = grid.transpose.sum { |line| line.join.scan(REGEX).flatten.size }
 
   rows = grid.size
   padding = (0...rows).map { |i| [nil] * i }
@@ -20,7 +22,7 @@ AOC.part1(read_lines: false) do |input|
   diags = padding.reverse.zip(grid).zip(padding).map(&:flatten).transpose.map(&:compact)
   diags += padding.zip(grid).zip(padding.reverse).map(&:flatten).transpose.map(&:compact)
 
-  d = diags.sum { |diag| diag.join.scan(/(?=(XMAS|SAMX))/).flatten.size }
+  d = diags.sum { |diag| diag.join.scan(REGEX).flatten.size }
 
   h + v + d
 end

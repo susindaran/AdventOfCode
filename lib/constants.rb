@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Constants
-  INT_MAX = 2 ** (64 - 2) - 1
+  INT_MAX = (2**(64 - 2)) - 1
   INT_MIN = -INT_MAX - 1
 
   SUPERSCRIPT_NUM = {
@@ -15,5 +15,5 @@ module Constants
     7 => "\u2077",
     8 => "\u2078",
     9 => "\u2079"
-  }
+  }.freeze
 end
