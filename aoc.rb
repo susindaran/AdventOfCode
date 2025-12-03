@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'benchmark'
+
 module AOC
   # Reads all the lines of the input and yields to the block
   def self.problem(input_file: 'input', read_lines: true)
@@ -37,10 +39,17 @@ module AOC
   end
 
   def self.solve
-    part1_sol = @part1&.call
-    part2_sol = @part2&.call
-    puts "Part 1: #{part1_sol}"
-    puts "Part 2: #{part2_sol}"
+    part1_sol, part2_sol = nil, nil
+
+    time = Benchmark.measure do
+      part1_sol = @part1&.call
+    end
+    puts "Part 1: #{part1_sol} [time taken: #{time.to_s.strip}]"
+
+    time = Benchmark.measure do
+      part2_sol = @part2&.call
+    end
+    puts "Part 2: #{part2_sol} [time taken: #{time.to_s.strip}]"
 
     [part1_sol, part2_sol]
   end
