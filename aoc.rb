@@ -7,7 +7,7 @@ module AOC
   def self.problem(input_file: 'input', read_lines: true)
     if read_lines
       file = File.open(input_file)
-      input = file.readlines
+      input = file.readlines(chomp: true)
     else
       input = File.read(input_file)
     end
@@ -18,7 +18,7 @@ module AOC
     @part1 = lambda do
       if read_lines
         file = File.open(input_file)
-        input = file.readlines
+        input = file.readlines(chomp: true)
       else
         input = File.read(input_file)
       end
@@ -30,7 +30,7 @@ module AOC
     @part2 = lambda do
       if read_lines
         file = File.open(input_file)
-        input = file.readlines
+        input = file.readlines(chomp: true)
       else
         input = File.read(input_file)
       end
