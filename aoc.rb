@@ -38,18 +38,33 @@ module AOC
     end
   end
 
+  def self.benchmark?
+    var = begin
+            ENV['BENCHMARK'].to_i || 0
+          rescue
+            0
+          end
+    var == 1
+  end
+
+  def self.print_s(str, time)
+    str += " [time taken: #{time.to_s.strip}]" if benchmark?
+    puts str
+  end
+
+
   def self.solve
     part1_sol, part2_sol = nil, nil
 
     time = Benchmark.measure do
       part1_sol = @part1&.call
     end
-    puts "Part 1: #{part1_sol} [time taken: #{time.to_s.strip}]"
+    print_s("Part 1: #{part1_sol}", time)
 
     time = Benchmark.measure do
       part2_sol = @part2&.call
     end
-    puts "Part 2: #{part2_sol} [time taken: #{time.to_s.strip}]"
+    print_s("Part 2: #{part2_sol}", time)
 
     [part1_sol, part2_sol]
   end
