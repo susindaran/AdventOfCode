@@ -1,6 +1,29 @@
 # frozen_string_literal: true
 
 require 'benchmark'
+require 'pry'
+require 'pry-byebug'
+
+def env_set?(name)
+  var = begin
+          ENV[name].to_i || 0
+        rescue
+          0
+        end
+  var == 1
+end
+
+def benchmark?
+  env_set?('BENCHMARK')
+end
+
+def debug?
+  env_set?('DEBUG')
+end
+
+def breakpoint
+  binding.pry if debug?
+end
 
 module AOC
   # Reads all the lines of the input and yields to the block
@@ -36,15 +59,6 @@ module AOC
       end
       blk.call(input)
     end
-  end
-
-  def self.benchmark?
-    var = begin
-            ENV['BENCHMARK'].to_i || 0
-          rescue
-            0
-          end
-    var == 1
   end
 
   def self.print_s(str, time)
