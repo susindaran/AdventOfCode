@@ -24,31 +24,28 @@ AOC.part1(read_lines: true) do |input|
   sum
 end
 
-def dp(bats)
-  arr = Array.new(bats.size) { Hash.new }
-
-  arr[bats.size - 1][1] = bats[-1]
-
-  pos = bats.size - 2
-
-  while pos >= 0
-    12.downto(1).each do |s|
-      if s == 1
-        arr[pos][s] = [bats[pos], arr[pos + 1][s]].max
-      elsif !arr[pos + 1][s - 1].nil?
-        arr[pos][s] = [(bats[pos] * (10**(s - 1))) + arr[pos + 1][s - 1], arr[pos + 1][s] || 0].max
-      end
-    end
-
-    pos -= 1
-  end
-
-  arr[0][12]
-end
-
 AOC.part2(read_lines: true) do |input|
   input.reduce(0) do |sum, line|
-    sum + dp(line.chars.map(&:to_i))
+    bats = line.chars.map(&:to_i)
+
+    dp = Array.new(13)
+    dp[1] = bats[-1]
+
+    pos = bats.size - 2
+    while pos >= 0
+      12.downto(1).each do |len|
+        if len == 1
+          dp[len] = [bats[pos], dp[len]].max
+        elsif !dp[len - 1].nil?
+          # See if we get a higher number using bats[pos] + highest number of length (len-1) seen so far
+          dp[len] = [(bats[pos] * (10 ** (len - 1)) + dp[len - 1]), dp[len] || 0].max
+        end
+      end
+
+      pos -= 1
+    end
+
+    sum + dp[12]
   end
 end
 
